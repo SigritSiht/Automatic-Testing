@@ -11,5 +11,8 @@ public class CurrentWeatherReport extends WeatherReport{
         super(cityName, geoCoords, units);
         this.tempCurrent = tempCurrent;
     }
-
+    @Override
+    public String toString(){
+        return "tempCurrent="+tempCurrent+"cityName"+cityName+"units"+units;
+    }
 }
