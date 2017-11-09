@@ -5,8 +5,10 @@
  */
 package task;
 
+import Exceptions.WeatherReportNotFoundException;
 import java.util.Scanner;
-import model.*;
+import model.CurrentWeatherReport;
+import model.WeatherRequest;
 import reporitory.WeatherRepository;
 import utility.Constants;
 
@@ -14,8 +16,9 @@ import utility.Constants;
  *
  * @author Local_Sigrit
  */
-public class Main {
-    public static void main(String[] args) throws Exception {
+public class Console {
+    public static void main(String[] args) throws Exception{
+        
         Scanner sc = new Scanner(System.in);
         String cityName = sc.nextLine();
         WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
