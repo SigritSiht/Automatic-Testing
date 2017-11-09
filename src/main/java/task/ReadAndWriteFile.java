@@ -20,8 +20,8 @@ import utility.Constants;
  */
 public class ReadAndWriteFile {
 
-    public static final String input = ("../input.txt");
-    private static final String output = ("../otuput.txt");
+    public static final String input = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/input.txt");
+    private static final String output = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/output.txt");
     public static void main(String[] args) throws Exception{
         
     
@@ -31,7 +31,7 @@ public class ReadAndWriteFile {
         String cityName = br.readLine();
         WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
         CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
-        System.out.println(cw.toString());
+        //System.out.println(cw.toString());
 
         BufferedWriter bw = null;
         FileWriter fw = null;
