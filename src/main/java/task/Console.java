@@ -20,9 +20,11 @@ public class Console {
     public static void main(String[] args) throws Exception{
         
         Scanner sc = new Scanner(System.in);
+        System.out.println("Enter city name: ");
         String cityName = sc.nextLine();
         WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
         CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
+        sc.close();
         System.out.println(cw.toString());
     }
 }

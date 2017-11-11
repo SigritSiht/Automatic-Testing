@@ -25,14 +25,12 @@ public class ReadAndWriteFile {
     public static void main(String[] args) throws Exception{
         
     
-   
         FileReader in = new FileReader(input);
         BufferedReader br = new BufferedReader(in);
         String cityName = br.readLine();
         WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
         CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
-        //System.out.println(cw.toString());
-
+       
         BufferedWriter bw = null;
         FileWriter fw = null;
         fw = new FileWriter(output);

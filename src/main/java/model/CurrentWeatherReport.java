@@ -13,6 +13,6 @@ public class CurrentWeatherReport extends WeatherReport{
     }
     @Override
     public String toString(){
-        return "tempCurrent ="+tempCurrent+" cityName "+cityName+" units "+units;
+        return " Linnas "+cityName+" on hetkel "+tempCurrent+" kraadi (ühik "+units+")";
     }
 }
