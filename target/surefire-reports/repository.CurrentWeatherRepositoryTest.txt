@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: repository.CurrentWeatherRepositoryTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.19 sec - in repository.CurrentWeatherRepositoryTest
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.593 sec - in repository.CurrentWeatherRepositoryTest

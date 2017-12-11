@@ -10,6 +10,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import model.CurrentWeatherReport;
+import model.ForecastWeatherReport;
 import model.WeatherRequest;
 import reporitory.WeatherRepository;
 import utility.Constants;
@@ -21,29 +22,35 @@ import utility.Constants;
 public class ReadAndWriteFile {
 
     public static final String input = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/input.txt");
-    private static final String output = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/output.txt");
+    //private static final String output = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/output.txt");
     public static void main(String[] args) throws Exception{
-        
-    
+
         FileReader in = new FileReader(input);
         BufferedReader br = new BufferedReader(in);
-        String cityName = br.readLine();
-        WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
-        CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
        
-        BufferedWriter bw = null;
-        FileWriter fw = null;
-        fw = new FileWriter(output);
-            bw = new BufferedWriter(fw);
-            bw.write(cw.toString());
-        if (bw != null){
-            System.out.println("Done");
-            bw.close();
+        String[] cityNames = br.readLine().split(" ");
+      
+        for(int i=0;i<cityNames.length;i++){
+         
+            String cityName = cityNames[i];
+
+            WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
+            CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
+            ForecastWeatherReport fwr = new WeatherRepository().getForecastThreeDays(wr);
+ 
+            BufferedWriter bw = null;
+            FileWriter fw = null;
+            fw = new FileWriter("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/"+cityName+".txt");
+                bw = new BufferedWriter(fw);
+                bw.write(cw.toString());
+                bw.write(fwr.toString());
+                bw.newLine();
+            if (bw != null){
+                bw.close();
+            }
+            if (fw != null)
+                fw.close();
         }
-        if (fw != null)
-            fw.close();
-
-
-
+        System.out.println("Done");
     }
 }

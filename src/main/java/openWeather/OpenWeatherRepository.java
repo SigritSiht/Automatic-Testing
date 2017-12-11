@@ -10,8 +10,6 @@ import java.util.Date;
 import model.Coordinates;
 import model.DayWeather;
 import org.json.JSONArray;
-import utility.Constants;
-import utility.Constants.UNIT;
 
 public class OpenWeatherRepository {
 
@@ -48,8 +46,6 @@ public class OpenWeatherRepository {
         
         DayWeather[] dayWeathers = new DayWeather[3];
 
-        float minTemp = Float.MAX_VALUE;
-        float maxTemp = Float.MIN_VALUE;
         
         Coordinates coordinates = new Coordinates();
         
@@ -57,31 +53,70 @@ public class OpenWeatherRepository {
         coordinates.longitude = jsonObject.getJSONObject("city").getJSONObject("coord").getDouble("lon"); 
 
         JSONObject elem = jsonArray.getJSONObject(0);
-        int currentDay = Integer.parseInt(elem.getString("dt_txt").substring(9, 10));
-        int currentTemp = elem.getJSONObject("main").getInt("temp");
-        minTemp = currentTemp < minTemp ? currentTemp : minTemp;
-        maxTemp = currentTemp > maxTemp ? currentTemp : maxTemp;
-        Date date = new Date(elem.getLong("dt")*1000);
+        /*
+            pmst ikke õige algul, võtan selle hetkese päeva info
+        */
+        int firstDay = Integer.parseInt(elem.getString("dt_txt").substring(9, 10));
+        //siit saan tänase päeva kuupäeva, aga hoopis ei tahaks, et see oleks 1 kolmest
+        /*
+        float minTemp = elem.getJSONObject("main").getInt("temp_min");//SEE
+        float maxTemp = elem.getJSONObject("main").getInt("temp_max");//SEE
+        */
+       // Date date = new Date(elem.getLong("dt")*1000); //SEE kõik if, slp miks muiud neid luua, kui sameDay*/
+        float minTemp = Float.MAX_VALUE;
+        float maxTemp = Float.MIN_VALUE;
 
-        for (int i = 1, day = 0, prevDay = currentDay; i < jsonArray.length() && day<3; i++) {
+        for (int i = 1, day = 0, prevDay = firstDay; i < jsonArray.length() && day<3; i++) {//cD
             elem = jsonArray.getJSONObject(i);
+            //siin liigun järgmise json osa juurda, a ei tea veel, kas on see sama päev v juba muutunud päev
+            firstDay = Integer.parseInt(elem.getString("dt_txt").substring(9, 10));//cD
+                
+                float minTempForCurrentObject = elem.getJSONObject("main").getInt("temp_min");
+                float maxTempForCurrentObject = elem.getJSONObject("main").getInt("temp_max");
+               /* float minTemp = elem.getJSONObject("main").getInt("temp_min");//SEE
+                float maxTemp = elem.getJSONObject("main").getInt("temp_max");//SEE*/
+                
 
-            currentDay = Integer.parseInt(elem.getString("dt_txt").substring(9, 10));
-            currentTemp = elem.getJSONObject("main").getInt("temp");
-            minTemp = currentTemp < minTemp ? currentTemp : minTemp;
-            maxTemp = currentTemp > maxTemp ? currentTemp : maxTemp;
+                
+            
+                minTemp = minTempForCurrentObject < minTemp ? minTempForCurrentObject : minTemp;
+                maxTemp = maxTempForCurrentObject > maxTemp ? maxTempForCurrentObject : maxTemp;
+            
+            
 
-            if (currentDay != prevDay) {
+
+            if (firstDay != prevDay) {//cD
+               
+                /*
+                        kindlalt if, kas eelnev min temp oli min temp minnim, 
+                          kuna käib kome h tagant, siis for j<8 sellega teha midagi
+            
+                for(int j=0;j<8;j++){
+                    if(j==0){
+                        minTemp= minTempForCurrentObject;
+                        maxTemp=maxTempForCurrentObject;
+                    }else
+                        if(minTempForCurrentObject<minTemp)
+                        {
+                           minTemp=minTempForCurrentObject;
+                        }
+                         if(maxTempForCurrentObject>maxTemp)
+                        {
+                           maxTemp=maxTempForCurrentObject;
+                        }
+                    
+                }
+                
+                see kogu kood ka vist selle for sisse, et väljastaks kellaaja jjne ka õigesti
+                */
+                Date date = new Date(elem.getLong("dt")*1000);
                 DayWeather dayWeather = new DayWeather();
                 dayWeather.date = date;
                 dayWeather.tempMin = minTemp-273.15f;
                 dayWeather.tempMax = maxTemp-273.15f;
                 dayWeathers[day++] = dayWeather;
-                
-                minTemp = Float.MAX_VALUE;
-                maxTemp = Float.MIN_VALUE;
-                prevDay = currentDay;
-                date = new Date(elem.getLong("dt")*1000);
+             
+                prevDay = firstDay;
             }
 
         }

@@ -13,6 +13,6 @@ public class CurrentWeatherReport extends WeatherReport{
     }
     @Override
     public String toString(){
-        return " Linnas "+cityName+" on hetkel "+tempCurrent+" kraadi (ühik "+units+")";
+        return " Linnas "+cityName+" koordinaatidega "+geoCoordinates+" on hetkel "+tempCurrent+" kraadi (ühik "+units+")";
     }
 }

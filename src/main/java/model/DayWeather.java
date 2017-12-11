@@ -9,4 +9,8 @@ public class DayWeather {
     public Date date;
     public DayWeather() {
     }
+     @Override
+    public String toString(){
+        return "Kuupäev " + date + ", min temp: "+ tempMin +", max temp: "+ tempMax;
+    }
 }
