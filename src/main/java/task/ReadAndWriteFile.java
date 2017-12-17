@@ -5,10 +5,13 @@
  */
 package task;
 
+import Exceptions.WeatherReportNotFoundException;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.function.Function;
 import model.CurrentWeatherReport;
 import model.ForecastWeatherReport;
 import model.WeatherRequest;
@@ -22,13 +25,15 @@ import utility.Constants;
 public class ReadAndWriteFile {
 
     public static final String input = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/input.txt");
-    //private static final String output = ("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/output.txt");
-    public static void main(String[] args) throws Exception{
+    
+    private static WeatherRepository weatherRepository;
 
-        FileReader in = new FileReader(input);
-        BufferedReader br = new BufferedReader(in);
-       
-        String[] cityNames = br.readLine().split(" ");
+    public ReadAndWriteFile(WeatherRepository weatherRepo) {
+        weatherRepository = weatherRepo;
+    }
+    public void actionMethod(BufferedReader input, Function<String,Writer> outputFactory)
+            throws IOException, WeatherReportNotFoundException{
+        String[] cityNames = input.readLine().split(" ");
       
         for(int i=0;i<cityNames.length;i++){
          
@@ -37,20 +42,38 @@ public class ReadAndWriteFile {
             WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
             CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
             ForecastWeatherReport fwr = new WeatherRepository().getForecastThreeDays(wr);
- 
-            BufferedWriter bw = null;
-            FileWriter fw = null;
-            fw = new FileWriter("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/"+cityName+".txt");
-                bw = new BufferedWriter(fw);
-                bw.write(cw.toString());
-                bw.write(fwr.toString());
-                bw.newLine();
-            if (bw != null){
-                bw.close();
-            }
-            if (fw != null)
-                fw.close();
-        }
+            
+            Writer output = outputFactory.apply(cityName);
+
+            output.write(cw.toString());
+            output.write(fwr.toString());
+            output.flush();
+            output.close();
+
+ }
         System.out.println("Done");
+        
     }
-}
+    private Writer getFileWriter(String cityName){
+        try{
+            return new FileWriter("C:/Users/sigri/TTU/Kolmas aasta/Esimene poolaasta/Automaattestimine/"+cityName+".txt");
+        } catch(IOException e){
+            throw new Error(e);
+        }
+    }
+
+    public static void main(String[] args) throws Exception {
+        
+        FileReader in = new FileReader(input);
+        BufferedReader inputFile = new BufferedReader(in);
+
+        ReadAndWriteFile obj = new ReadAndWriteFile(new WeatherRepository());
+        obj.actionMethod(new BufferedReader(new FileReader(input)), obj::getFileWriter);
+    }
+        
+
+}     
+        
+       
+        
+ 
