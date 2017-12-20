@@ -33,25 +33,23 @@ public class ReadAndWriteFile {
     }
     public void actionMethod(BufferedReader input, Function<String,Writer> outputFactory)
             throws IOException, WeatherReportNotFoundException{
-        String[] cityNames = input.readLine().split(" ");
-      
-        for(int i=0;i<cityNames.length;i++){
-         
-            String cityName = cityNames[i];
+    
+        String cityName;
 
-            WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
-            CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
-            ForecastWeatherReport fwr = new WeatherRepository().getForecastThreeDays(wr);
+        while((cityName = input.readLine()) != null){
             
-            Writer output = outputFactory.apply(cityName);
+                WeatherRequest wr = new WeatherRequest(cityName, Constants.COUNTRY_CODE.EE, Constants.UNIT.metric);
+                CurrentWeatherReport cw = new WeatherRepository().getCurrentWeather(wr);
+                ForecastWeatherReport fwr = new WeatherRepository().getForecastThreeDays(wr);
 
-            output.write(cw.toString());
-            output.write(fwr.toString());
-            output.flush();
-            output.close();
+                Writer output = outputFactory.apply(cityName);
 
- }
-        System.out.println("Done");
+                output.write(cw.toString()+", "+fwr.toString());
+                output.flush();
+                output.close();
+
+        }
+            System.out.println("Done");
         
     }
     private Writer getFileWriter(String cityName){
@@ -61,17 +59,16 @@ public class ReadAndWriteFile {
             throw new Error(e);
         }
     }
+ 
 
     public static void main(String[] args) throws Exception {
         
-        FileReader in = new FileReader(input);
-        BufferedReader inputFile = new BufferedReader(in);
+        BufferedReader inputFile = new BufferedReader(new FileReader(input));
 
         ReadAndWriteFile obj = new ReadAndWriteFile(new WeatherRepository());
         obj.actionMethod(new BufferedReader(new FileReader(input)), obj::getFileWriter);
     }
-        
-
+       
 }     
         
        

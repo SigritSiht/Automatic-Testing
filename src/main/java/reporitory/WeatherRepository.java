@@ -12,6 +12,7 @@ import openWeather.OpenWeatherRequest;
 import utility.Constants;
 
 import java.io.IOException;
+import openWeather.OpenWeatherService;
 
 public class WeatherRepository implements Weather {
     
@@ -26,9 +27,10 @@ public class WeatherRepository implements Weather {
     public CurrentWeatherReport getCurrentWeather(WeatherRequest request) throws WeatherReportNotFoundException {
        OpenWeatherRequest owr = new OpenWeatherRequest(request.cityName, 
                request.countryCode, request.unit);
+       OpenWeatherService ows = new OpenWeatherService();
        OpenWeatherCurrentDTO openWeatherCurrentDTO;
         try {
-            openWeatherCurrentDTO = repo.getCurrentWeatherReport(owr);
+            openWeatherCurrentDTO = repo.getCurrentWeatherReport(owr,ows);
         } catch (Exception e) {
             throw new WeatherReportNotFoundException(e.getMessage());
         }
@@ -42,9 +44,10 @@ public class WeatherRepository implements Weather {
     public ForecastWeatherReport getForecastThreeDays(WeatherRequest request) throws WeatherReportNotFoundException {
         OpenWeatherRequest owr = new OpenWeatherRequest(request.cityName, 
                request.countryCode, request.unit);
+         OpenWeatherService ows = new OpenWeatherService();
        OpenForecastWeatherDTO openForecastWeatherDTO;
         try {
-            openForecastWeatherDTO = repo.getThreeDayWeatherReport(owr);
+            openForecastWeatherDTO = repo.getThreeDayWeatherReport(owr,ows);
         } catch (Exception e) {
             throw new WeatherReportNotFoundException(e.getMessage());
         }

@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: mockito.MockTest
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 7.393 sec <<< FAILURE! - in mockito.MockTest
+processWritesReturnedData()  Time elapsed: 6.913 sec  <<< FAILURE!
+org.junit.ComparisonFailure: expected:<[weather, forecast]> but was:<[ Linnas Tallinn koordinaatidega 24.75:59.44 on hetkel 1.0 kraadi (ühik metric), [Kuupäev Thu Dec 21 02:00:00 EET 2017, min temp: -0.1499939, max temp: 1.8500061, Kuupäev Fri Dec 22 02:00:00 EET 2017, min temp: -1.1499939, max temp: 3.850006, Kuupäev Sat Dec 23 02:00:00 EET 2017, min temp: -1.1499939, max temp: 3.850006]]>
+	at mockito.MockTest.processWritesReturnedData(MockTest.java:89)
+
+processRequestsWeatherForGivenCity()  Time elapsed: 0.315 sec  <<< FAILURE!
+org.mockito.exceptions.verification.WantedButNotInvoked: 
+
+Wanted but not invoked:
+weatherRepository.getCurrentWeather(
+    <Capturing argument>
+);
+-> at mockito.MockTest.processRequestsWeatherForGivenCity(MockTest.java:68)
+Actually, there were zero interactions with this mock.
+
+	at mockito.MockTest.processRequestsWeatherForGivenCity(MockTest.java:68)
+

@@ -13,17 +13,12 @@ import org.json.JSONArray;
 
 public class OpenWeatherRepository {
 
-    private static final String API_KEY = "c9da61558cc83b090aa3922e9a2dfe6d";
-    private static final String API_URL = "https://api.openweathermap.org/data/2.5/";
-
     public OpenWeatherRepository(){
     }
 
-    public OpenWeatherCurrentDTO getCurrentWeatherReport(OpenWeatherRequest request) throws IOException {
-        String urlString = String.format("%sweather?q=%s,%s&appid=%s&unit=%s", API_URL, request.city, request.countryCode, API_KEY, request.units);
-        String jsonString = HttpUtility.makeHttpGetRequest(urlString);
-
-        JSONObject jsonObject  = new JSONObject(jsonString);
+    public OpenWeatherCurrentDTO getCurrentWeatherReport(OpenWeatherRequest request, OpenWeatherService service) throws IOException {
+       
+       JSONObject jsonObject = service.getServiceForCurrentWeather(request);
         
         String cityName = jsonObject.getString("name");
         Coordinates coordinates = new Coordinates();
@@ -36,11 +31,9 @@ public class OpenWeatherRepository {
         return result;
     }
     
-    public OpenForecastWeatherDTO getThreeDayWeatherReport(OpenWeatherRequest request) throws IOException{
-        String urlString = String.format("%sforecast?q=%s,%s&appid=%s&unit=%s", API_URL, request.city, request.countryCode, API_KEY, request.units);
-        String jsonString = HttpUtility.makeHttpGetRequest(urlString);
+    public OpenForecastWeatherDTO getThreeDayWeatherReport(OpenWeatherRequest request, OpenWeatherService service) throws IOException{
 
-        JSONObject jsonObject  = new JSONObject(jsonString);
+       JSONObject jsonObject  = service.getServiceForForecastWeather(request);
         
         JSONArray jsonArray = jsonObject.getJSONArray("list");
         

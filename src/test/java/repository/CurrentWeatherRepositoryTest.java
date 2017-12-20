@@ -34,21 +34,6 @@ public class CurrentWeatherRepositoryTest {
         }
     }
 
-    @AfterAll
-    public static void tearDownClass() {
-        // runs only once per class (for expensive shared resources/operations)
-    }
-
-    @BeforeEach
-    public void setUpTest() {
-        // runs before each test
-    }
-
-
-    @AfterEach
-    public void tearDownTest() {
-        // runs before each test
-    }
 
     @Test
     public void testIfWeatherRepositoryRespCityEqualsReqCity() {

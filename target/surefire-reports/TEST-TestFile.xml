@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="utility.HttpUtilityTest" time="0.187" tests="2" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="TestFile" time="0.004" tests="1" errors="0" skipped="0" failures="1">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_121\jre\bin"/>
@@ -62,6 +62,9 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase name="testSuccessfulConnectionToWeatherAPI" classname="utility.HttpUtilityTest" time="0.031"/>
-  <testcase name="testSuccessfulConnectionToForecastAPI" classname="utility.HttpUtilityTest" time="0.156"/>
+  <testcase name="TestFile" classname="JUnit Jupiter" time="0.004">
+    <failure message="All test will be ignored, cause: Error: api.openweathermap.org" type="java.lang.AssertionError">java.lang.AssertionError: All test will be ignored, cause: Error: api.openweathermap.org
+	at TestFile.setUpAllTests(TestFile.java:29)
+</failure>
+  </testcase>
 </testsuite>

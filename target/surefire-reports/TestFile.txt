@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: TestFile
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec <<< FAILURE! - in TestFile
+TestFile  Time elapsed: 0.004 sec  <<< FAILURE!
+java.lang.AssertionError: All test will be ignored, cause: Error: api.openweathermap.org
+	at TestFile.setUpAllTests(TestFile.java:29)
+
