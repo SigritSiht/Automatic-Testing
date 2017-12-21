@@ -3,7 +3,6 @@ package openWeather;
 import DTO.OpenForecastWeatherDTO;
 import DTO.OpenWeatherCurrentDTO;
 import org.json.JSONObject;
-import utility.HttpUtility;
 
 import java.io.IOException;
 import java.util.Date;
@@ -18,7 +17,7 @@ public class OpenWeatherRepository {
 
     public OpenWeatherCurrentDTO getCurrentWeatherReport(OpenWeatherRequest request, OpenWeatherService service) throws IOException {
        
-       JSONObject jsonObject = service.getServiceForCurrentWeather(request);
+        org.json.JSONObject jsonObject = service.getServiceForCurrentWeather(request);
         
         String cityName = jsonObject.getString("name");
         Coordinates coordinates = new Coordinates();
@@ -33,7 +32,7 @@ public class OpenWeatherRepository {
     
     public OpenForecastWeatherDTO getThreeDayWeatherReport(OpenWeatherRequest request, OpenWeatherService service) throws IOException{
 
-       JSONObject jsonObject  = service.getServiceForForecastWeather(request);
+        org.json.JSONObject jsonObject  = service.getServiceForForecastWeather(request);
         
         JSONArray jsonArray = jsonObject.getJSONArray("list");
         
@@ -45,7 +44,7 @@ public class OpenWeatherRepository {
         coordinates.latitude = jsonObject.getJSONObject("city").getJSONObject("coord").getDouble("lat");        
         coordinates.longitude = jsonObject.getJSONObject("city").getJSONObject("coord").getDouble("lon"); 
 
-        JSONObject elem = jsonArray.getJSONObject(0);
+        org.json.JSONObject elem = jsonArray.getJSONObject(0);
        
         int firstDay = Integer.parseInt(elem.getString("dt_txt").substring(9, 10));
        
